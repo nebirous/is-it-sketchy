@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import bands from "../data/sketchy_list.json";
+
+
+export async function getStaticPaths() {
+	const posts = bands.filter((band) => !band.Artist && band.Sketchy);
+
+	return bands.map((band) => ({
+		params: {
+			artist: band.Artist,
+		},
+		props: { band },
+	}));
+}
+
+const { band } = Astro.props;
+---
+
+<Layout title={band.Artist}>
+	<div class="pb-12 mx-auto max-w-3xl prose prose-md prose-headings:font-bold prose-a:text-blue-600">
+		<h2 class="text-center text-5xl pt-12 pb-3">{band.Artist}</h2>
+		<p class="text-center text-lg text-gray-600 pb-4">{band.Explanation}</p>
+	</div>
+</Layout>

@@ -2,7 +2,7 @@ import Fuse from 'fuse.js';
 import {useState} from 'react';
 
 const options = {
-  keys: ['frontmatter.title', 'frontmatter.description', 'frontmatter.slug'],
+  keys: ['Artist'],
   includeMatches: true,
   minMatchCharLength: 2,
   threshold: 0.5,
@@ -12,7 +12,7 @@ function Search({searchList}) {
   const [query, setQuery] = useState('');
   const fuse = new Fuse(searchList, options);
 
-  const posts = fuse
+  const bands = fuse
     .search(query)
     .map((result) => result.item)
     .slice(0, 5);
@@ -65,21 +65,20 @@ function Search({searchList}) {
 
 		{query.length > 1 && (
 			<div className="my-4">
-				Found {posts.length} {posts.length === 1 ? 'result' : 'results'} for '{query}'
+				Found {bands.length} {bands.length === 1 ? 'result' : 'results'} for '{query}'
 			</div>
 		)}
 
 		<ul className="list-none">
-			{posts &&
-				posts.map((post) => (
+			{bands &&
+				bands.map((band) => (
 					<li className="py-2">
-						<a
+						<p
 							className="text-lg text-blue-700 hover:text-blue-900 hover:underline underline-offset-2"
-							href={`/${post.frontmatter.slug}`}
 						>
-							{post.frontmatter.title}
-						</a>
-						<p className="text-sm text-gray-800">{post.frontmatter.description}</p>
+							{band.Artist}
+						</p>
+						<p className="text-sm text-gray-800">{band.Explanation}</p>
 					</li>
 				))}
 		</ul>

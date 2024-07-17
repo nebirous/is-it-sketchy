@@ -1,8 +1,7 @@
 ---
 import SearchBar from '../components/SearchBar.astro';
 import Layout from '../layouts/Layout.astro';
-const allPosts = await Astro.glob('../posts/*.{md,mdx}');
-const posts = allPosts.filter((post) => !post.frontmatter.draft && post.frontmatter.slug);
+
 ---
 
 <Layout title="Blog">
@@ -10,7 +9,7 @@ const posts = allPosts.filter((post) => !post.frontmatter.draft && post.frontmat
 		<h1
 			class="text-5xl lg:text-7xl uppercase font-bold bg-clip-text text-transparent bg-gradient-to-tr from-blue-500 to-green-500 text-center"
 		>
-			Welcome to my Blog
+			is <strong>[THAT]</strong> band skethy?
 		</h1>
 	</div>
 	<div class="max-w-3xl mx-auto">
