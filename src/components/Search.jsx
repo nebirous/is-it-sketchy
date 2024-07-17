@@ -36,7 +36,7 @@ function Search({searchList}) {
 					height={24}
 					viewBox="0 0 24 24"
 					strokeWidth="2"
-					stroke="currentColor"
+					stroke="black"
 					fill="none"
 					strokeLinecap="round"
 					strokeLinejoin="round"
@@ -52,14 +52,14 @@ function Search({searchList}) {
 				value={query}
 				onChange={handleOnSearch}
 				className="block w-full p-4 pl-10 text-sm 
-                                text-gray-900 
+                                text-white
                                border border-gray-300
-                               rounded-lg bg-gray-50
+                               rounded-full bg-gray-50
 
                                focus:outline-none
-                               focus:ring-blue-500
-                               focus:border-blue-500"
-				placeholder="Search for anything..."
+                               focus:ring-red-500
+                               focus:border-red-500"
+				placeholder="Search for a band..."
 			/>
 		</div>
 
@@ -74,11 +74,13 @@ function Search({searchList}) {
 				bands.map((band) => (
 					<li className="py-2">
 						<p
-							className="text-lg text-blue-700 hover:text-blue-900 hover:underline underline-offset-2"
+							className="text-lg text-orange-500 hover:text-blue-900 hover:underline underline-offset-2"
 						>
-							{band.Artist}
+							{band.Artist} - {band.Country}
 						</p>
-						<p className="text-sm text-gray-800">{band.Explanation}</p>
+						<p>{band.Genre}</p>
+						<p>{band.Sketchy}</p>
+						<p className="text-sm text-white">{band.Explanation}</p>
 					</li>
 				))}
 		</ul>
