@@ -1,10 +1,43 @@
 import Fuse from 'fuse.js';
 import {useState} from 'react';
 
+export const COLORKEY = {
+	SAFE: {
+	  name: 'Safe',
+	  description: 'Nothing sketch, as far as we know',
+	  class: 'bg-[#248662] text-white',
+	  icon: "👍",
+	},
+	QUESTIONABLE: {
+	  name: 'Questionable',
+	  description: 'Debatable, shifted over time, or otherwise worth noting',
+	  class: 'bg-[#c4961a] text-white',
+	  icon: "❓",
+	},
+	SKETCH: {
+	  name: 'Sketchy',
+	  description: 'Evidence suggesting fascists or far right but perhaps no true proof',
+	  class: 'bg-[#763535] text-white',
+	  icon: "👎",
+	},
+	NAZI: {
+	  name: 'Nazi',
+	  description: 'Pro-fascist, far right content or proven fascists',
+	  class: 'bg-black text-white',
+	  icon: "💀",
+	},
+	UNKNOWN: {
+	  name: 'Unknown',
+	  description: 'Politics & views of band are unknown',
+	  class: 'bg-[#16485e] text-white',
+	  icon: "🤷‍♂️",
+	},
+}
+
 const options = {
   keys: ['Artist'],
   includeMatches: true,
-  minMatchCharLength: 2,
+  minMatchCharLength: 3,
   threshold: 0.5,
 };
 
@@ -52,7 +85,7 @@ function Search({searchList}) {
 				value={query}
 				onChange={handleOnSearch}
 				className="block w-full p-4 pl-10 text-sm 
-                                text-white
+                                text-gray-800
                                border border-gray-300
                                rounded-full bg-gray-50
 
@@ -72,15 +105,22 @@ function Search({searchList}) {
 		<ul className="list-none">
 			{bands &&
 				bands.map((band) => (
-					<li className="py-2">
-						<p
-							className="text-lg text-orange-500 hover:text-blue-900 hover:underline underline-offset-2"
+					<li className={`m-3 p-4 ${COLORKEY[band.Sketchy].class} relative rounded-xl`} key={band.Artist}>
+						<p class="absolute text-xl p-5 top-0 right-0">{band.Genre} - {COLORKEY[band.Sketchy].icon}</p>
+						<h1
+							className="text-2xl font-bold uppercase"
 						>
-							{band.Artist} - {band.Country}
-						</p>
-						<p>{band.Genre}</p>
-						<p>{band.Sketchy}</p>
-						<p className="text-sm text-white">{band.Explanation}</p>
+							{band.Artist}   {band.Country}
+						</h1> 
+						
+						
+						<p className="pt-2 text-sm text-white">{band.Explanation}</p>
+						{
+							band.Sources && band.Sources.map((source) => (
+								
+								<a href={source} className="pt-2 text-sm border-dotted border-blue-100">Source</a>
+							))
+						}
 					</li>
 				))}
 		</ul>
