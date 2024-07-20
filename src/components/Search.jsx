@@ -1,5 +1,6 @@
 import Fuse from 'fuse.js';
 import {useState} from 'react';
+import GenreBadge from './GenreBadge.astro';
 
 export const COLORKEY = {
 	SAFE: {
@@ -106,15 +107,28 @@ function Search({searchList}) {
 			{bands &&
 				bands.map((band) => (
 					<li className={`m-3 p-4 ${COLORKEY[band.Sketchy].class} relative rounded-xl`} key={band.Artist}>
-						<p class="absolute text-xl p-5 top-0 right-0">{band.Genre} - {COLORKEY[band.Sketchy].icon}</p>
+						<p class="absolute text-xl p-5 top-0 right-0">
+							<div
+								class="rounded-full text-sm border border-white 
+								justify-center items-center py-1 px-2 bg-white/8"  
+								>
+								{band.Genre}
+							</div></p>
 						<h1
 							className="text-2xl font-bold uppercase"
 						>
-							{band.Artist}   {band.Country}
+							{band.Artist} {COLORKEY[band.Sketchy].icon} 
 						</h1> 
 						
 						
-						<p className="pt-2 text-sm text-white">{band.Explanation}</p>
+						<p className="pt-2 text-sm text-white">{band.Country} -  
+							{
+								band.Explanation && band.Explanation.trim() !== '' 
+								? " "+band.Explanation
+								: <span className="italic"> No further explanation, give us info on our <a href="/contact" className="underline hover:text-blue-300">contact form.</a></span>
+
+							}
+						</p>
 						{
 							band.Sources && band.Sources.map((source) => (
 								
