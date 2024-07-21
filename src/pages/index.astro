@@ -1,20 +1,22 @@
 ---
-import SearchBar from '../components/SearchBar.astro';
-import Layout from '../layouts/Layout.astro';
-import '@/styles/globals.css'
-
+import SearchBar from "../components/SearchBar.astro";
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Is [THAT] band sketchy?">
-	<div class=" py-10 lg:py-16">
-		<h1
-			class="text-5xl lg:text-7xl uppercase font-bold bg-clip-text text-center"
-		>
-			is <strong class="bg-clip-text text-transparent bg-gradient-to-tr from-red-500 to-yellow-500">[THAT]</strong> band sketchy?
-		</h1>
-	</div>
-	<div class="max-w-3xl mx-auto">
-		<SearchBar />
-	</div>
+  <div class="py-10 lg:py-16">
+    <h1
+      class="bg-clip-text text-center text-5xl font-bold uppercase lg:text-7xl"
+    >
+		is 
+		<strong
+			class="bg-gradient-to-tr from-red-500 to-yellow-500 bg-clip-text text-transparent">
+			[THAT]
+		</strong> 
+		band sketchy?
+    </h1>
+  </div>
+  <div class="mx-auto max-w-3xl">
+    <SearchBar />
+  </div>
 </Layout>
-
