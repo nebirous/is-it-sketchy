@@ -1,0 +1,136 @@
+---
+import ContactModal from "./ContactModal";
+import {COLORKEY} from "../utils/Constants.astro";
+import Bands from "../utils/sketchy_list.json";
+
+const searchList = Bands;
+
+const options = {
+  keys: ["Artist"],
+  includeMatches: true,
+  minMatchCharLength: 4,
+  threshold: 0.5,
+};
+---
+
+<div>
+  <label
+    for="search"
+    class="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white"
+  >
+    Search
+  </label>
+  <div class="relative">
+    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="icon icon-tabler icon-tabler-search"
+        width={24}
+        height={24}
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="black"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <circle cx={10} cy={10} r={7}></circle>
+        <line x1={21} y1={21} x2={15} y2={15}></line>
+      </svg>
+    </div>
+    <input
+      type="text"
+      id="search"
+      class="block w-full rounded-full border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-800 focus:border-red-500 focus:outline-none focus:ring-red-500"
+      placeholder="Search for a band..."
+    />
+  </div>
+  
+  <div id="results" class="my-4"></div>
+  <ul id="bandList" class="list-none"></ul>
+</div>
+
+<ContactModal client:load />
+
+<script define:vars={{ searchList, options, COLORKEY }}>
+  import('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.esm.js').then((module) => {
+    const Fuse = module.default;
+    
+    const searchInput = document.getElementById("search");
+    const resultsDiv = document.getElementById("results");
+    const bandList = document.getElementById("bandList");
+
+    const fuse = new Fuse(searchList, options);
+
+    searchInput.addEventListener("input", handleSearch);
+
+    function handleSearch(event) {
+      const query = event.target.value;
+      if (query.length > 1) {
+        const bands = fuse.search(query).map((result) => result.item).slice(0, 5);
+        updateResults(query, bands);
+        renderBands(bands);
+      } else {
+        resultsDiv.innerHTML = "";
+        bandList.innerHTML = "";
+      }
+    }
+
+    function updateResults(query, bands) {
+      resultsDiv.innerHTML = `Found ${bands.length} ${
+        bands.length === 1 ? "result" : "results"
+      } for '${query}'`;
+    }
+
+    function renderBands(bands) {
+      bandList.innerHTML = bands
+        .map(
+          (band) => `
+        <li class="m-3 p-4 ${COLORKEY[band.Sketchy].class} relative rounded-xl">
+          <span class="absolute right-0 top-0 p-5 text-xl">
+            <div class="bg-white/8 items-center justify-center rounded-full border border-white px-2 py-1 text-sm">
+              ${band.Genre}
+            </div>
+          </span>
+          <h1 class="text-2xl font-bold uppercase">
+            ${band.Artist} ${COLORKEY[band.Sketchy].icon}
+          </h1>
+          <div class="pt-2 text-sm text-white">
+            ${band.Country} -
+            ${
+              band.Explanation && band.Explanation.trim() !== ""
+                ? " " + band.Explanation
+                : `<span class="italic">
+                     No further explanation, give us info on our <span class="contact-trigger underline">suggestions form</span>.
+                   </span>`
+            }
+          </div>
+          ${
+            band.Sources
+              ? band.Sources.map(
+                  (source) => `<a
+                      target=”_blank”
+                      href="${source}"
+                      class="border-dotted border-blue-100 pt-2 text-sm underline hover:text-slate-200"
+                    >
+                      Source ↗
+                    </a>
+                  `
+                ).join("")
+              : ""
+          }
+        </li>
+      `
+        )
+        .join("");
+
+      document.querySelectorAll('.contact-trigger').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.dispatchEvent(new Event('openContactDialog'));
+        });
+      });
+    }
+  });
+</script>
