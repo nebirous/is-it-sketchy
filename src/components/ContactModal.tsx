@@ -1,77 +1,81 @@
-import React, { useEffect, useState } from 'react';
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Button } from "@/components/ui/button"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import React, { useEffect, useState } from "react";
 
 const ContactModal: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
-    bandName: '',
-    suggestion: '',
-    sources: '',
+    bandName: "",
+    suggestion: "",
+    sources: "",
   });
 
   useEffect(() => {
     const handleOpenDialog = () => setIsOpen(true);
-    window.addEventListener('openContactDialog', handleOpenDialog);
-    return () => window.removeEventListener('openContactDialog', handleOpenDialog);
+    window.addEventListener("openContactDialog", handleOpenDialog);
+    return () =>
+      window.removeEventListener("openContactDialog", handleOpenDialog);
   }, []);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = event.target;
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
         body: JSON.stringify({
           ...formData,
-          access_key: import.meta.env.CONTACT_FORM_API_KEY,
-        })
+          access_key: "83318623-8b29-4351-98cc-024d005d5aec",
+        }),
       });
 
       const result = await response.json();
       if (response.status === 200) {
         alert(result.message);
-        setFormData({ bandName: '', suggestion: '', sources: '' }); 
+        setFormData({ bandName: "", suggestion: "", sources: "" });
         setIsOpen(false);
       } else {
         throw new Error(result.message);
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('There was an error submitting the form. Please try again.');
+      console.error("Error submitting form:", error);
+      alert("There was an error submitting the form. Please try again.");
     }
   };
 
   return (
-    
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="bg-zinc-900 border-black sm:max-w-[425px]">
+      <DialogContent className="border-black bg-zinc-900 sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className=' font-bold '>Suggestions</DialogTitle>
+          <DialogTitle className="font-bold">Suggestions</DialogTitle>
           <DialogDescription className="pt-3">
-            Use this form to send us suggestions about new bands to be added, sources for the existing ones or other information. 
-            Please, add sources to your information so we can verify them (links, videos, etc).
+            Use this form to send us suggestions about new bands to be added,
+            sources for the existing ones or other information. Please, add
+            sources to your information so we can verify them (links, videos,
+            etc).
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
