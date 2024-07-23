@@ -26,6 +26,7 @@ concurrency:
 
 env:
   BUILD_PATH: "." # default value when not using subfolders
+  CONTACT_FORM_API_KEY: "83318623-8b29-4351-98cc-024d005d5aec"
   # BUILD_PATH: subfolder
 
 jobs:
