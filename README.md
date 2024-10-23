@@ -1,12 +1,17 @@
-# Is [THAT] Band Sketchy?
+![image](https://github.com/user-attachments/assets/6ac5ea7d-114a-4f7a-94ab-0bdc63eb5117)
 
-Ever wondered if your favorite band's lead singer secretly collects Nazi memorabilia? Or if that cool black metalgroup you just discovered has a history of sacrificing small animals on stage? Look no further! This web app is your one-stop shop for uncovering the dirty laundry of the music world. We're here to help you decide whether to cancel your concert tickets or just embrace the chaos.
+[https://nebirous.github.io/is-it-sketchy/](Live!)
+
+Ever wondered if your favorite band's lead singer secretly collects Nazi memorabilia? Or if that cool black metal group you just discovered has a history of sacrificing small animals on stage? Look no further! This web app is your one-stop shop for uncovering the dirty laundry of the music world. We're here to help you decide whether to cancel your concert tickets or just embrace the chaos.
+
+I have created it just to test how to make a quick search application with static data from a JSON file using Astro, Tailwind and components from ShadCN.   
 
 ## Features
 
 - Search functionality to quickly find information about specific artists
 - Color-coded results indicating the level of concern (SAFE, QUESTIONABLE, SKETCH, NAZI)
 - Detailed explanations and sources (when available) for each artist
+- Form to send new suggestions
 - Responsive design for both desktop and mobile use
 
 ## Tech Stack
@@ -25,13 +30,13 @@ Ever wondered if your favorite band's lead singer secretly collects Nazi memorab
    ```
 3. Run the development server:
    ```
-   npm run dev
+   npm start
    ```
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+4. Open [http://localhost:3000](http://localhost:4321) in your browser
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Wether it is info about a band, or improvements for the website, any help will be welcome. You can directly make a Pull Request to this repository or maybe use the form we already implemented in our website.
 
 ## License
 
@@ -39,4 +44,5 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## Disclaimer
 
-This project aims to provide information based on research and publicly available sources. It does not claim to be a definitive authority on any artist's beliefs or associations. Users are encouraged to do their own research and form their own opinions.
+All the original info belongs to [https://www.reddit.com/user/sfdajkewrjlawernmg/](u/sfdajkewrjlawernmg), which he compiled and posted on [https://www.reddit.com/r/rabm/comments/1aqxq3c/sketch_list/?sort=new](r/rabm subreddit). Most of the information is publicly known, but there are no sources in the original excel. This project does not claim to be a definitive authority on any artist's beliefs or associations. If you want us to make any correction feel free suggest it contributing to the project.
+
