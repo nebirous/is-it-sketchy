@@ -1,8 +1,10 @@
 ![image](https://github.com/user-attachments/assets/6ac5ea7d-114a-4f7a-94ab-0bdc63eb5117)
 
-[https://nebirous.github.io/is-it-sketchy/](Live!)
+👉🏻 [Live!](https://nebirous.github.io/is-it-sketchy/)
 
 Ever wondered if your favorite band's lead singer secretly collects Nazi memorabilia? Or if that cool black metal group you just discovered has a history of sacrificing small animals on stage? Look no further! This web app is your one-stop shop for uncovering the dirty laundry of the music world. We're here to help you decide whether to cancel your concert tickets or just embrace the chaos.
+
+The data source used for the 
 
 I have created it just to test how to make a quick search application with static data from a JSON file using Astro, Tailwind and components from ShadCN.   
 
@@ -44,5 +46,5 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## Disclaimer
 
-All the original info belongs to [https://www.reddit.com/user/sfdajkewrjlawernmg/](u/sfdajkewrjlawernmg), which he compiled and posted on [https://www.reddit.com/r/rabm/comments/1aqxq3c/sketch_list/?sort=new](r/rabm subreddit). Most of the information is publicly known, but there are no sources in the original excel. This project does not claim to be a definitive authority on any artist's beliefs or associations. If you want us to make any correction feel free suggest it contributing to the project.
+All the original info belongs to [u/sfdajkewrjlawernmg](https://www.reddit.com/user/sfdajkewrjlawernmg/), which he compiled and posted on [r/rabm](https://www.reddit.com/r/rabm/comments/1aqxq3c/sketch_list/?sort=new). Most of the information is publicly known, but there are no sources in the original excel. This project does not claim to be a definitive authority on any artist's beliefs or associations. If you want us to make any correction feel free to contribute to the project.
 
