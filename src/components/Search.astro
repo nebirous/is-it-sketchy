@@ -1,12 +1,12 @@
 ---
-import ContactModal from "./ContactModal";
-import {COLORKEY} from "../utils/Constants.astro";
-import Bands from "../utils/sketchy_list.json";
+import ContactModal from './ContactModal';
+import {COLORKEY} from '../utils/Constants.astro';
+import Bands from '../utils/sketchy_list.json';
 
 const searchList = Bands;
 
 const options = {
-  keys: ["Artist"],
+  keys: ['Artist'],
   includeMatches: true,
   minMatchCharLength: 4,
   threshold: 0.5,
@@ -16,12 +16,14 @@ const options = {
 <div>
   <label
     for="search"
-    class="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white"
+    class="dark:text-white sr-only mb-2 text-sm font-medium text-gray-900"
   >
     Search
   </label>
   <div class="relative">
-    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+    <div
+      class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="icon icon-tabler icon-tabler-search"
@@ -45,48 +47,91 @@ const options = {
       class="block w-full rounded-full border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-800 focus:border-red-500 focus:outline-none focus:ring-red-500"
       placeholder="Search for a band..."
     />
+    </div>
+    <div class="mt-2 text-center text-sm italic text-gray-500">
+      Send us info on our <span class="contact-trigger cursor-pointer underline"
+        >suggestions form</span
+      >
   </div>
-  
+
   <div id="results" class="my-4"></div>
   <ul id="bandList" class="list-none"></ul>
 </div>
 
 <ContactModal client:load />
 
-<script define:vars={{ searchList, options, COLORKEY }}>
-  import('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.esm.js').then((module) => {
-    const Fuse = module.default;
-    
-    const searchInput = document.getElementById("search");
-    const resultsDiv = document.getElementById("results");
-    const bandList = document.getElementById("bandList");
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const handleContactTrigger = () => {
+      window.dispatchEvent(new Event('openContactDialog'));
+    };
 
-    const fuse = new Fuse(searchList, options);
+    // Initial triggers
+    document.querySelectorAll('.contact-trigger').forEach((trigger) => {
+      trigger.addEventListener('click', handleContactTrigger);
+    });
 
-    searchInput.addEventListener("input", handleSearch);
+    // Set up a MutationObserver to watch for changes in the bandList
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              if (node instanceof Element) {
+                node.querySelectorAll('.contact-trigger').forEach((trigger) => {
+                  trigger.addEventListener('click', handleContactTrigger);
+                });
+              }
+            }
+          });
+        }
+      });
+    });
 
-    function handleSearch(event) {
-      const query = event.target.value;
-      if (query.length > 1) {
-        const bands = fuse.search(query).map((result) => result.item).slice(0, 5);
-        updateResults(query, bands);
-        renderBands(bands);
-      } else {
-        resultsDiv.innerHTML = "";
-        bandList.innerHTML = "";
+    // Start observing the bandList for changes
+    const bandList = document.getElementById('bandList');
+    observer.observe(bandList, {childList: true, subtree: true});
+  });
+</script>
+
+<script define:vars={{searchList, options, COLORKEY}}>
+  import('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.esm.js').then(
+    (module) => {
+      const Fuse = module.default;
+
+      const searchInput = document.getElementById('search');
+      const resultsDiv = document.getElementById('results');
+      const bandList = document.getElementById('bandList');
+
+      const fuse = new Fuse(searchList, options);
+
+      searchInput.addEventListener('input', handleSearch);
+
+      function handleSearch(event) {
+        const query = event.target.value;
+        if (query.length > 1) {
+          const bands = fuse
+            .search(query)
+            .map((result) => result.item)
+            .slice(0, 5);
+          updateResults(query, bands);
+          renderBands(bands);
+        } else {
+          resultsDiv.innerHTML = '';
+          bandList.innerHTML = '';
+        }
       }
-    }
 
-    function updateResults(query, bands) {
-      resultsDiv.innerHTML = `Found ${bands.length} ${
-        bands.length === 1 ? "result" : "results"
-      } for '${query}'`;
-    }
+      function updateResults(query, bands) {
+        resultsDiv.innerHTML = `Found ${bands.length} ${
+          bands.length === 1 ? 'result' : 'results'
+        } for '${query}'`;
+      }
 
-    function renderBands(bands) {
-      bandList.innerHTML = bands
-        .map(
-          (band) => `
+      function renderBands(bands) {
+        bandList.innerHTML = bands
+          .map(
+            (band) => `
         <li class="m-3 p-4 ${COLORKEY[band.Sketchy].class} relative rounded-xl">
           <span class="absolute right-0 top-0 p-5 text-xl">
             <div class="bg-white/8 items-center justify-center rounded-full border border-white px-2 py-1 text-sm">
@@ -99,10 +144,10 @@ const options = {
           <div class="pt-2 text-sm text-white">
             ${band.Country} -
             ${
-              band.Explanation && band.Explanation.trim() !== ""
-                ? " " + band.Explanation
+              band.Explanation && band.Explanation.trim() !== ''
+                ? ' ' + band.Explanation
                 : `<span class="italic">
-                     No further explanation, give us info on our <span class="contact-trigger underline">suggestions form</span>.
+                     No further explanation, give us info on our <span class="contact-trigger cursor-pointer underline">suggestions form</span>.
                    </span>`
             }
           </div>
@@ -116,21 +161,15 @@ const options = {
                     >
                       Source ↗
                     </a>
-                  `
-                ).join("")
-              : ""
+                  `,
+                ).join('')
+              : ''
           }
         </li>
-      `
-        )
-        .join("");
-
-      document.querySelectorAll('.contact-trigger').forEach(el => {
-        el.addEventListener('click', (e) => {
-          e.preventDefault();
-          window.dispatchEvent(new Event('openContactDialog'));
-        });
-      });
-    }
-  });
+      `,
+          )
+          .join('');
+      }
+    },
+  );
 </script>
