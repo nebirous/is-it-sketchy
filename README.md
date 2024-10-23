@@ -4,8 +4,6 @@
 
 Ever wondered if your favorite band's lead singer secretly collects Nazi memorabilia? Or if that cool black metal group you just discovered has a history of sacrificing small animals on stage? Look no further! This web app is your one-stop shop for uncovering the dirty laundry of the music world. We're here to help you decide whether to cancel your concert tickets or just embrace the chaos.
 
-The data source used for the 
-
 I have created it just to test how to make a quick search application with static data from a JSON file using Astro, Tailwind and components from ShadCN.   
 
 ## Features
