@@ -70,12 +70,14 @@ const ContactModal: React.FC = () => {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="border-black bg-zinc-900 sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="font-bold">Suggestions</DialogTitle>
+          <DialogTitle className="font-bold">Send us</DialogTitle>
           <DialogDescription className="pt-3">
-            Use this form to send us suggestions about new bands to be added,
-            sources for the existing ones or other information. Please, add
-            sources to your information so we can verify them (links, videos,
-            etc).
+            Use this form to send us suggestions for:<br />
+            • New bands to be added<br />
+            • Additional sources for existing bands<br />
+            • Any other improvements<br />
+            <br />
+            Please include sources (e.g., links, videos) to support your suggestions.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
