@@ -19,8 +19,8 @@ const {title} = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="min-h-screen flex flex-col bg-zinc-900 text-white">
-    <div id="layout-wrapper" class="pt-40 px-8 mb-8">
+  <body class="flex min-h-screen flex-col bg-zinc-900 text-white">
+    <div id="layout-wrapper" class="mb-8 px-8 pt-28 lg:pt-40">
       <slot />
     </div>
     <Footer />
@@ -42,5 +42,8 @@ const {title} = Astro.props;
   });
 
   // Set scrollbar width as CSS variable
-  document.documentElement.style.setProperty('--scrollbar-width', `${window.innerWidth - document.documentElement.clientWidth}px`);
+  document.documentElement.style.setProperty(
+    '--scrollbar-width',
+    `${window.innerWidth - document.documentElement.clientWidth}px`,
+  );
 </script>
