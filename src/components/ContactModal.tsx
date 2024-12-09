@@ -66,18 +66,25 @@ const ContactModal: React.FC = () => {
     }
   };
 
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (!open) {
+      window.dispatchEvent(new Event('closeContactDialog'));
+    }
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="border-black bg-zinc-900 sm:max-w-[425px]">
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
+      <DialogContent className="border-black bg-zinc-900">
         <DialogHeader>
-          <DialogTitle className="font-bold">Send us</DialogTitle>
-          <DialogDescription className="pt-3">
+          <DialogTitle className="font-bold">Send us your suggestions</DialogTitle>
+          <DialogDescription className="pt-3 text-left">
             Use this form to send us suggestions for:<br />
             • New bands to be added<br />
             • Additional sources for existing bands<br />
             • Any other improvements<br />
             <br />
-            Please include sources (e.g., links, videos) to support your suggestions.
+            Please include sources (e.g., links to interviews, videos, etc) to support your suggestions.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>

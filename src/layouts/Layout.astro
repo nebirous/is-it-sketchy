@@ -31,16 +31,6 @@ const {title} = Astro.props;
   const body = document.body;
   const wrapper = document.getElementById('layout-wrapper');
 
-  window.addEventListener('openContactDialog', () => {
-    body.classList.add('overflow-hidden');
-    wrapper.classList.add('pr-[var(--scrollbar-width)]');
-  });
-
-  window.addEventListener('closeContactDialog', () => {
-    body.classList.remove('overflow-hidden');
-    wrapper.classList.remove('pr-[var(--scrollbar-width)]');
-  });
-
   // Set scrollbar width as CSS variable
   document.documentElement.style.setProperty(
     '--scrollbar-width',
